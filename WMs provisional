@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Walter Media Studio (WMS) - Creación de contenido digital multiformato.">
+  <title>Walter Media Studio</title>
+  <style>
+    /* ---------------------------------------------
+       1. VARIABLES Y TEMA (NEGRO Y DORADO)
+    ---------------------------------------------- */
+    :root {
+      --bg: #000000;            /* Fondo negro puro */
+      --card-bg: #0a0a0a;       /* Gris carbón casi negro para tarjetas */
+      --text: #f3f4f6;          /* Blanco tenue para lectura secundaria */
+      --text-muted: #8a8f98;    /* Gris para párrafos secundarios */
+      --border: rgba(212, 175, 55, 0.2); /* Borde con toque dorado tenue */
+      
+      /* Paleta de tonos dorados */
+      --gold-primary: #d4af37;
+      --gold-gradient: linear-gradient(135deg, #dfba73 0%, #ffdf78 40%, #b38728 75%, #f7e1a8 100%);
+      
+      --font-stack: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: var(--font-stack);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    /* ---------------------------------------------
+       2. NAVEGACIÓN MINIMALISTA
+    ---------------------------------------------- */
+    header {
+      width: 100%;
+      padding: 2.5rem 1.5rem 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    nav {
+      display: inline-flex;
+      gap: 1.8rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 0.8rem;
+    }
+
+    .tab-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      padding: 0.3rem 0.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .tab-btn:hover {
+      color: #dfba73;
+    }
+
+    .tab-btn.active {
+      color: #dfba73;
+      font-weight: 600;
+      border-bottom: 1px solid #dfba73;
+      margin-bottom: -1px;
+    }
+
+    /* ---------------------------------------------
+       3. CONTENEDOR PRINCIPAL
+    ---------------------------------------------- */
+    main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+    }
+
+    .section-tab {
+      display: none;
+      width: 100%;
+      max-width: 680px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .section-tab.active {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---------------------------------------------
+       4. PESTAÑA: INICIO (FONDO NEGRO Y LETRAS DORADAS)
+    ---------------------------------------------- */
+    .hero-wms {
+      font-size: clamp(5rem, 18vw, 10.5rem);
+      font-weight: 900;
+      letter-spacing: 0.14em;
+      line-height: 0.95;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      user-select: none;
+
+      /* Acabado dorado metálico */
+      background: var(--gold-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 30px rgba(212, 175, 55, 0.25));
+    }
+
+    .hero-name {
+      font-size: clamp(1rem, 3.2vw, 1.4rem);
+      font-weight: 300;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: #dfba73; /* Dorado tenue */
+    }
+
+    /* ---------------------------------------------
+       5. PESTAÑAS: QUIÉNES SOMOS & CONTACTO
+    ---------------------------------------------- */
+    .content-box {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      padding: 3.5rem 2.5rem;
+      border-radius: 12px;
+      text-align: left;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+    }
+
+    .content-box h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.2rem;
+      color: #dfba73;
+    }
+
+    .content-box p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+    }
+
+    .highlight-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 0.8rem;
+      margin-top: 1.8rem;
+      list-style: none;
+    }
+
+    .highlight-list li {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: var(--text);
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+
+    /* Buzón de Contacto Dorado */
+    .mailbox-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+
+    .mailbox-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      background: var(--gold-gradient);
+      color: #000000;
+      text-decoration: none;
+      padding: 0.95rem 1.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      letter-spacing: 0.03em;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+    }
+
+    .mailbox-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(212, 175, 55, 0.45);
+    }
+
+    .mailbox-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+    }
+
+    /* ---------------------------------------------
+       6. PIE DE PÁGINA
+    ---------------------------------------------- */
+    footer {
+      padding: 1.5rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: rgba(212, 175, 55, 0.4);
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Barra de pestañas -->
+  <header>
+    <nav role="tablist">
+      <button class="tab-btn active" role="tab" aria-selected="true" onclick="openTab('inicio')">Inicio</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="openTab('quienes-somos')">Quiénes somos</button>
+      <button class="tab-btn" role="tab" aria-selected="false" onclick="openTab('contacto')">Contacto</button>
+    </nav>
+  </header>
+
+  <main>
+    <!-- 1. PESTAÑA: INICIO (FONDO NEGRO Y LETRAS DORADAS) -->
+    <section id="inicio" class="section-tab active">
+      <h1 class="hero-wms">WMS</h1>
+      <p class="hero-name">Walter Media Studio</p>
+    </section>
+
+    <!-- 2. PESTAÑA: QUIÉNES SOMOS -->
+    <section id="quienes-somos" class="section-tab">
+      <div class="content-box">
+        <h2>Quiénes somos</h2>
+        <p>
+          Bienvenido a <strong>Walter Media Studio</strong>. Somos un laboratorio y estudio creativo enfocado en dar vida a proyectos innovadores, fusionando arte, narrativa y tecnología.
+        </p>
+        <p>
+          Nos dedicamos a la conceptualización, producción y desarrollo de toda clase de contenidos digitales y experiencias interactivas:
+        </p>
+
+        <ul class="highlight-list">
+          <li>E-books</li>
+          <li>Podcasts</li>
+          <li>Videos</li>
+          <li>Aplicaciones</li>
+          <li>Páginas Web</li>
+          <li>Videojuegos</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3. PESTAÑA: CONTACTO -->
+    <section id="contacto" class="section-tab">
+      <div class="content-box">
+        <h2>Contacto</h2>
+        <p>
+          Te damos una cordial bienvenida a nuestra vía directa de comunicación. Si deseas iniciar un proyecto, solicitar una colaboración o conocer más acerca de nuestro trabajo, nuestro buzón está a tu disposición.
+        </p>
+
+        <div class="mailbox-wrapper">
+          <a href="mailto:walterobc01@gmail.com?subject=Contacto%20Walter%20Media%20Studio" class="mailbox-btn">
+            <svg viewBox="0 0 24 24">
+              <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+            </svg>
+            Abrir buzón de contacto
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; Walter Media Studio
+  </footer>
+
+  <!-- Script de cambio de pestañas -->
+  <script>
+    function openTab(tabId) {
+      const sections = document.querySelectorAll('.section-tab');
+      sections.forEach(sec => sec.classList.remove('active'));
+
+      const buttons = document.querySelectorAll('.tab-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      const targetSection = document.getElementById(tabId);
+      if (targetSection) {
+        targetSection.classList.add('active');
+      }
+
+      event.currentTarget.classList.add('active');
+      event.currentTarget.setAttribute('aria-selected', 'true');
+    }
+  </script>
+</body>
+</html>
